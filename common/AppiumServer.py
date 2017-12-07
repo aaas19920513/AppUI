@@ -1,19 +1,20 @@
-
+# -*-coding:utf-8-*-
 import os
-import urllib.request
-from urllib.error import URLError
+import requests
 from multiprocessing import Process
-import readConfig as readConfig
+import readConfig
 import threading
-readConfigLocal = readConfig.ReadConfig()
+import time
+cf = readConfig.ReadConfig()
 
 
 class AppiumServer:
 
     def __init__(self):
-        global openAppium, baseUrl
-        openAppium = readConfigLocal.getcmdValue("openAppium")
-        baseUrl = readConfigLocal.getConfigValue("baseUrl")
+        global openAppium, baseUrl,stopAppium
+        openAppium = cf.getcmdValue("openAppium")
+        stopAppium = cf.getcmdValue("stopAppium")
+        baseUrl = cf.getConfigValue("baseUrl")
 
     def start_server(self):
         """start the appium server
@@ -29,7 +30,7 @@ class AppiumServer:
         """
         # kill myServer
         # 参考https://www.cnblogs.com/CoreXin/p/5566607.html
-        os.popen('taskkill /fi "imagename eq node.EXE" /f')
+        os.popen(stopAppium)
 
     def re_start_server(self):
         """reStart the appium server
@@ -41,19 +42,20 @@ class AppiumServer:
         """Determine whether server is running
         :return:True or False
         """
-        response = None
+        req = None
         url = baseUrl+"/status"
         try:
-            response = urllib.request.urlopen(url, timeout=5)
-            if str(response.getcode()).startswith("2"):
+            req = requests.get(url)
+            code = req.status_code
+            if str(code).startswith('2'):
                 return True
             else:
                 return False
-        except URLError:
+        except :
             return False
         finally:
-            if response:
-                response.close()
+            if req:
+                req.close()
 
 
 class RunServer(threading.Thread):
@@ -72,7 +74,7 @@ if __name__ == "__main__":
     server.start_server()
     print("strart server")
     print("running server")
-    server.is_runnnig()
- #   time.sleep(30)
- #   server.stop_server()
+
+    time.sleep(30)
+    server.stop_server()
  #  print("stop server")
