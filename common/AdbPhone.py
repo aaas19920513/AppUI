@@ -14,8 +14,8 @@ class Init:
         startAdb = cf.getcmdValue("startAdb")
         closeAdb = cf.getcmdValue("closeAdb")
         checkPhone = cf.getcmdValue("checkPhone")
-        installApk = cf.getcmdValue("installSoftware")
-        uninstallApk = cf.getcmdValue("uninstallSoftware")
+        installApk = cf.getcmdValue("installApk")
+        uninstallApk = cf.getcmdValue("uninstallApk")
         projectpath = gl.project_path
 
     def check_phone(self):
@@ -112,7 +112,7 @@ class Init:
         :return:basename
         """
         apks = os.listdir(projectpath)
-        print(projectpath)
+        print(apks)
         if len(apks) > 0:
             for apk in apks:
                 basename = os.path.basename(apk)
@@ -120,9 +120,9 @@ class Init:
                     return basename
                 # if os.path.isfile(apk):
                 #     basename = os.path.basename(apk)
-                #     print(basename)
+                #     print basename
                 #     if basename.split('.')[-1] == "apk":
-                #         print(basename)
+                #         print basename
                 #         return basename
         else:
             return None
@@ -130,5 +130,5 @@ class Init:
 
 if __name__ == '__main__':
     ojb = Init()
-    print(ojb.get_deviceName())
-    print(ojb.get_android_version())
+    print ojb.get_deviceName()
+    print ojb.get_android_version()

@@ -11,7 +11,7 @@ cf = readConfig.ReadConfig()
 class AppiumServer:
 
     def __init__(self):
-        global openAppium, baseUrl,stopAppium
+        global openAppium, baseUrl, stopAppium
         openAppium = cf.getcmdValue("openAppium")
         stopAppium = cf.getcmdValue("stopAppium")
         baseUrl = cf.getConfigValue("baseUrl")
