@@ -1,10 +1,14 @@
 # -*-coding:utf-8 -*-
+__author__ = 'tuihou'
+'''
+buildparser
+'''
 
 from App_keywords import Action
 from config import globalparameter as gl
 import AppiumServer
 import time
-
+import AdbPhone
 # 构建测试步骤
 def buildStep( keyword, tag=None, loc=None, param=None, judge=None):
 
@@ -25,7 +29,7 @@ def buildStep( keyword, tag=None, loc=None, param=None, judge=None):
     return step
 
 # 运行buildStep，filepath为测试用例文件，sheetno测试用例表名
-def runStep(filepath = gl.project_path + '\\data\\test.xls',sheetno = 0):
+def runStep(filepath = gl.project_path + '\\data\\test1.xlsx',sheetno = 0):
 
     table = Action.readtable(filepath, sheetno)
     rows = table.nrows
@@ -37,13 +41,36 @@ def runStep(filepath = gl.project_path + '\\data\\test.xls',sheetno = 0):
         key_word, tag, loc, para, judge = value[0], value[1], value[2], value[3], value[4]
         step = buildStep(key_word, tag, loc, para, judge)
         print desc+':' + step
- #       eval(step)
+        time.sleep(1)
+        eval(step)
 
 if __name__ == "__main__":
-    server = AppiumServer.AppiumServer()
-    server.start_server()
-    time.sleep(10)
-    A = Action()
-    A.action_sign('click', 'id', 'com.taobao.taobao:id/home_searchedit')
-    A.action_sign('send_keys', 'id', 'com.taobao.taobao:id/searchEdit', 'sssssss')
-#    runStep()
+    checkphone = AdbPhone.Init()
+
+    if checkphone.check_phone():
+        server = AppiumServer.AppiumServer()
+        server.start_server()
+        time.sleep(5)
+        if server.is_runnnig():
+            runStep()
+        else:
+            server.re_start_server()
+            time.sleep(3)
+            runStep()
+
+    else:
+        checkphone.re_start()
+        print u'***********************正在重连设备中，请稍后***********************'
+        server = AppiumServer.AppiumServer()
+        server.start_server()
+        time.sleep(5)
+        if server.is_runnnig():
+            runStep()
+#    server = AppiumServer.AppiumServer()
+#    server.start_server()
+#    while not server.is_runnnig():
+#    A = Action()
+#    A.action_sign('click', 'xpath',"//android.widget.EditText[@resource-id='com.taobao.taobao:id/home_searchedit']")
+#    A.action_sign('input', 'id', 'com.taobao.taobao:id/searchEdit', 'sssssss')
+
+#        runStep()

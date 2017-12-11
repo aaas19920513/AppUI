@@ -1,4 +1,6 @@
 # -*-coding:utf-8-*-
+__author__ = 'tuihou'
+
 import os
 import requests
 from multiprocessing import Process
@@ -71,10 +73,16 @@ class RunServer(threading.Thread):
 if __name__ == "__main__":
 
     server = AppiumServer()
-    server.start_server()
+#    server.start_server()
+    time.sleep(5)
     print("strart server")
     print("running server")
+    if server.is_runnnig():
+        print 1111
+    else:
+        print 22
+        server.re_start_server()
 
-    time.sleep(30)
-    server.stop_server()
+ #   time.sleep(30)
+#    server.stop_server()
  #  print("stop server")

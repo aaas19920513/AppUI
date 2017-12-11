@@ -1,9 +1,13 @@
 # -*-coding:utf-8 -*-
+__author__ = 'tuihou'
+import sys
 from AppDriver import MyDriver
 import xlrd
 from selenium.webdriver.support.ui import WebDriverWait
 import time, os
 import log
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class Action():
 
@@ -220,7 +224,10 @@ class Action():
 
     def action_sign(self, action_name, *args):
         """
-        带参数的反射函数
+        定义带参数的反射函数
+        :param action_name: 被调用函数名
+        :param args:        被调用函数所需参数
+        :return:
         """
         try:
             act = getattr(self, action_name)
@@ -260,6 +267,45 @@ class Action():
         for args in range(1, table.nrows):
             # 使用生成器 yield
             yield table.row_values(args)
+
+    def input(self, tag, loc, text):
+        """
+        定义输入关键字
+        :param tag: 元素定位方式
+        :param loc: 元素的value
+        :param text: 输入的value
+        :return:
+        """
+        try:
+            ele = self.find_element(tag, loc)
+            ele.click()
+            ele.clear()
+            ele.send_keys(text)
+        except AttributeError:
+            self.applog.error(u"%s输入 '%s' 出错" % (self, text))
+
+    def quite(self):
+        """
+        定义退出关键字
+        :return:
+        """
+        try:
+            return driver.quit()
+        except AttributeError:
+            self.applog.error(u"关闭驱动出错")
+
+    def sleep(self, times):
+        """
+        延时
+        :param times:
+        :return:
+        """
+        try:
+            time.sleep(float(times))
+        except AttributeError:
+            self.applog.error(u"%s延时出错" %self)
+
+
 
 if __name__ == '__main__':
 

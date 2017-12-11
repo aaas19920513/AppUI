@@ -1,4 +1,5 @@
 # coding:utf-8
+__author__ = 'tuihou'
 
 import os, smtplib, os.path , time
 from config import globalparameter as gl
@@ -43,19 +44,19 @@ class send_email(object):
 
     # 这里的报告文件必须含有截图，否则发送的不是最新的report
     def sendnewReport(self):
-        #获取report文件夹下的文件夹列表RepList（以时间命名的列表）
+        # 获取report文件夹下的文件夹列表RepList（以时间命名的列表）
         RepList = os.listdir(gl.report_path)
-        #获取report下最新报告文件夹NewRepList_son（最接近当前时间的文件夹，其实就是某天生成的报告文件夹）
+        # 获取report下最新报告文件夹NewRepList_son（最接近当前时间的文件夹，其实就是某天生成的报告文件夹）
         NewRepList = RepList[-2]
         NewRepList_son = os.listdir(gl.report_path+'\\'+NewRepList)
-        #将最近那天生成的报告排序
+        # 将最近那天生成的报告排序
         NewRepList_son.sort()
-        #得到最新的报告名称
+        # 得到最新的报告名称
         new_report = NewRepList_son[-2]
-        #获取最近生成报告的绝对路径
+        # 获取最近生成报告的绝对路径
         new_report_path = gl.report_path+NewRepList+'\\'+new_report
         print new_report_path
-        #发送邮件
+        # 发送邮件
         self.email_init(new_report_path, new_report)
 
     # 这里的报告文件不能含有截图，否则不是最新的report
@@ -76,5 +77,7 @@ class send_email(object):
 #        print new_report_path
         # 发送邮件
         self.email_init(new_report_path, new_report_list[-1])
-a=send_email()
-a.sendReport()
+
+if __name__ == '__main__':
+    a = send_email()
+    a.sendReport()

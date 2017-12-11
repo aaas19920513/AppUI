@@ -1,9 +1,16 @@
 # -*-coding:utf-8 -*-
+__author__ = 'tuihou'
+
+'''
+定义基本操作页面
+'''
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 import time, os
 import common.log
 from selenium.webdriver.common.by import By
+
+
 class action():
     driver = None
     capabilities = {
@@ -44,7 +51,7 @@ class action():
         except:
             self.applog.error(u"%s 页面中未能找到 %s 元素" % (self, loc))
 
-            # 重新封装输入方法
+
 
     # 重写定义send_keys方法,这里的loc格式为（'id','元素名'）
     def input(self, tag, loc, text):
@@ -239,6 +246,15 @@ class action():
         except AttributeError:
             self.applog.error(u"%s找不到元素%s" % (self, loc))
 
+    def click(self, tag, loc):
+        """
+        重新封装按钮点击方法
+        """
+        print u'通过'+tag+u'，点击'+loc
+        try:
+            self.find_element(tag, loc).click()
+        except AttributeError:
+            self.applog.error(u"点击出错,找不到元素%s" % loc)
 
 
 

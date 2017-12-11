@@ -16,11 +16,10 @@ class home(basepage.action):
     # 淘宝搜索框loc
     search_input_loc = (By.ID, "com.taobao.taobao:id/searchEdit")
 
-
-
     # 点击搜索
     def click_search(self):
-        self.find_element(*self.search_loc).click()
+#        self.find_element(*self.search_loc).click()
+         self.click('id', "com.taobao.taobao:id/home_searchedit")
 
     # 输入搜索关键字
     def input_search(self, words):

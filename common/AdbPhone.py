@@ -1,3 +1,5 @@
+# -*-coding:utf-8-*-
+__author__ = 'tuihou'
 
 import os
 import readConfig
@@ -9,6 +11,7 @@ class Init:
 
     def __init__(self):
         global PhoneName, AndroidVersion, startAdb, closeAdb, checkPhone, installApk, uninstallApk, projectpath
+
         PhoneName = cf.getcmdValue("getPhone")
         AndroidVersion = cf.getcmdValue("getAndroidVersion")
         startAdb = cf.getcmdValue("startAdb")
@@ -112,7 +115,7 @@ class Init:
         :return:basename
         """
         apks = os.listdir(projectpath)
-        print(apks)
+
         if len(apks) > 0:
             for apk in apks:
                 basename = os.path.basename(apk)
@@ -132,3 +135,5 @@ if __name__ == '__main__':
     ojb = Init()
     print ojb.get_deviceName()
     print ojb.get_android_version()
+    print ojb.get_apk()
+    print ojb.check_phone()
