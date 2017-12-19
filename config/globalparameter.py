@@ -32,5 +32,5 @@ img_path = project_path+"\\error_img\\"+time.strftime('%Y%m%d%H%S', time.localti
 # 设置发送测试报告的公共邮箱、用户名和密码
 smtp_sever = 'smtp.163.com'  # 邮箱SMTP服务，各大运营商的smtp服务可以在网上找，然后可以在foxmail这些工具中验正
 email_name = "18566774520@163.com"  # 发件人名称
-email_password = "liaoguanghua202"  # 发件人登录密码
+email_password = "password"  # 发件人登录密码
 email_To = '345203857@qq.com'  # 收件人
