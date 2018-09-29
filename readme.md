@@ -1,5 +1,5 @@
 # 说明
-Appium +python 2.7+unittest android 关键字驱动框架
+Appium +python 2.7+unittest android 
 
 ## 第三方库
 - xlrd
